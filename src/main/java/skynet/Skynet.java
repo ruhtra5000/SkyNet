@@ -1,106 +1,69 @@
 package skynet;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Scanner;
 
-//Grafo em si
+//Classe responsável por administrar o menu da aplicação
 public class Skynet {
-    private ArrayList<Cidade> cidades;
-    private ArrayList<LinkedList<Viagem>> linhasAereas;
+    //Atributos
+    private SkynetGrafo skynet;
 
-    public Skynet (String arquivo){
-        this.cidades = new ArrayList<>();
-        this.linhasAereas = new ArrayList<>();
-        lerArquivo(arquivo);
+    //Atributos operacionais
+    private Scanner scanner;
+    private int opcao;
+    private String dado;
+
+    //Construtor
+    public Skynet (){
+        this.skynet = new SkynetGrafo("skynet/src/main/resources/grafo.txt");
+        this.opcao = 0;
+        this.scanner = new Scanner(System.in); //.useDelimiter("\n"); 
     }
 
-    //Metodos
-    //Gerar o grafo
-    public void lerArquivo (String arquivo) {
-        int [] indices = {0, 0};//V, E
-        String linha;
-        try {
-            File arq = new File(arquivo);
-            Scanner scanner = new Scanner(arq);
-            for (int linhaNum = 0; scanner.hasNextLine(); linhaNum++){
-                linha = scanner.nextLine();
-                if(linhaNum == 0){
-                    indices = preencherIndices(linha);
-                }
-                else if(linhaNum > 0 && linhaNum <= indices[0]){
-                    adicionarVertice(linha);
-                }
-                else {
-                    adicionarAresta(linha);
-                }
+    //Métodos
+    public void iniciarAplicacao(){
+        while (opcao != 7){
+            imprimirMenuPrincipal();
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    skynet.imprimirAdj();
+                    break;
+                case 2:
+                    skynet.imprimirVertices();
+                    break;
+                case 3:
+                    System.out.println("Informe o nome da cidade que deseja buscar:");
+                    dado = scanner.next();
+                    skynet.imprimirDadosCidade(dado);
+                    break;
+                case 4:
+                    
+                    break;
+                case 5:
+                    
+                    break;
+                case 6:
+                    
+                    break;
+                case 7:
+                    System.out.println("Encerrando aplicação...");
+                    break;
+                default:
+                    break;
             }
-            scanner.close();
-        }
-        catch(FileNotFoundException err){
-            System.out.println("Erro: " + err.getMessage());
         }
     }
 
-    private int [] preencherIndices (String linha){
-        int [] ind = {0, 0};
-        String [] temp = linha.split(" ");
-        ind[0] = Integer.parseInt(temp[0]);
-        ind[1] = Integer.parseInt(temp[1]);
-        return ind;
-    }
-
-    private void adicionarVertice(String linha) {
-        String [] linhaDividida = linha.split(";");
-        Cidade c = new Cidade(linhaDividida[0], linhaDividida[1], linhaDividida[2]);
-        //0 -> nome; 1 -> País; 2 -> Descrição
-        
-        cidades.add(c);
-        linhasAereas.add(new LinkedList<>());
-    }
-
-    private void adicionarAresta(String linha) {
-        String [] div = linha.split(";");
-        int posicao1 = retornarIndiceVertice(div[0]);
-        int posicao2 = retornarIndiceVertice(div[1]);
-        double tempoViagem = Double.parseDouble(div[2]);
-        double precoViagem = Double.parseDouble(div[3]);
-
-        Viagem v1 = new Viagem(posicao1, tempoViagem, precoViagem);
-        Viagem v2 = new Viagem(posicao2, tempoViagem, precoViagem);
-
-        linhasAereas.get(posicao1).add(v2);
-        linhasAereas.get(posicao2).add(v1);
-    }
-
-    private int retornarIndiceVertice(String nome){
-        for (int i = 0; i < cidades.size(); i++){
-            if(cidades.get(i).getNome().equals(nome))
-                return i;
-        }
-        return -1;
-    }
-
-    //Imprimir o grafo
-    public void imprimirAdj(){
-        System.out.println("Lista de adjacencia:");
-        for (int i = 0; i < cidades.size(); i++){
-            System.out.print(cidades.get(i).getNome() + ": ");
-            if(!linhasAereas.get(i).isEmpty()){
-                for (int j = 0; j < linhasAereas.get(i).size(); j++){
-                    System.out.printf("[%s, %.1f, %.0f] ", 
-                    retornarNomeDoNo(linhasAereas.get(i).get(j).getVertice()),
-                    linhasAereas.get(i).get(j).getTempoViagem(),
-                    linhasAereas.get(i).get(j).getPrecoPassagem());
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    private String retornarNomeDoNo (int index){
-        return cidades.get(index).getNome();
+    private void imprimirMenuPrincipal(){
+        System.out.println("<===== SKYNET =====>");
+        System.out.println("1. Imprimir grafo");
+        System.out.println("2. Listar cidades");
+        System.out.println("3. Consultar cidade e voos disponíveis");
+        System.out.println("4. Buscar rota mais barata");
+        System.out.println("5. Buscar rota mais rápida");
+        System.out.println("6. Buscar rota com menos conexões");
+        System.out.println("7. Sair");
+        System.out.print("Comando: ");
     }
 }

@@ -10,6 +10,7 @@ public class Cidade {
     //Construtor
     public Cidade (String nome, String pais, String descricao) {
         this.nome = nome;
+        this.pais = pais;
         this.descricao = descricao;
     }
     

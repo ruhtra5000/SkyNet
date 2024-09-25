@@ -12,7 +12,7 @@ Cidade do Mexico;Mexico;Uma das maiores cidades do mundo, intensa e historica, c
 Havana;Cuba;Capital historica de Cuba, famosa por sua arquitetura colonial e vibrante cultura caribenha.
 Lisboa;Portugal;Cidade costeira portuguesa, conhecida por suas colinas, azulejos coloridos e historia rica.
 Madrid;Espanha;A dinamica capital da Espanha, que combina tradicao real com uma vida cultural empolgante.
-Paris;França;A iconica "Cidade Luz", famosa por sua arte, moda, gastronomia e arquitetura classica.
+Paris;Franca;A iconica "Cidade Luz", famosa por sua arte, moda, gastronomia e arquitetura classica.
 Londres;Inglaterra;Centro cosmopolita global, onde tradicao historica e inovacao moderna coexistem.
 Berlim;Alemanha;Capital alema, marcada por sua historia dramatica e uma cena cultural contemporanea bem ativa.
 Roma;Italia;A eterna capital da Italia, onde ruinas antigas e igrejas renascentistas moldam uma rica heranca cultural.
@@ -27,7 +27,7 @@ Pequim;China;O coracao cultural e político da China, com vastos marcos historic
 Toquio;Japao;Uma metropole futurista do Japao, conhecida por sua tecnologia de ponta e tradicoes antigas.
 Seoul;Coreia do Sul;Capital dinamica da Coreia do Sul, mesclando templos historicos com modernidade tecnologica e cultura pop.
 Dubai;Emirados Arabes Unidos;Cidade ultramoderna dos Emirados Arabes, famosa por seus arranha-ceus, shoppings de luxo e estilo de vida cosmopolita.
-Meca;Arabia Saudita;Cidade sagrada do Isla na Arabia Saudita, destino de peregrinação para milhoes de muculmanos.
+Meca;Arabia Saudita;Cidade sagrada do Isla na Arabia Saudita, destino de peregrinacao para milhoes de muculmanos.
 Singapura;Singapura;Cidade-estado global e prospera, conhecida por sua arquitetura futurista e eficiencia moderna.
 Sydney;Australia;A agitada cidade costeira da Australia, famosa pela Opera iconica e suas praias deslumbrantes.
 Cidade do Cabo;Africa do Sul;Cidade sul-africana de beleza natural unica, cercada por montanhas e mar, com rica historia multicultural.
