@@ -10,20 +10,22 @@ public class Skynet {
     //Atributos operacionais
     private Scanner scanner;
     private int opcao;
-    private String dado;
+    private String dado, dado2;
 
     //Construtor
     public Skynet (){
         this.skynet = new SkynetGrafo("skynet/src/main/resources/grafo.txt");
         this.opcao = 0;
-        this.scanner = new Scanner(System.in); //.useDelimiter("\n"); 
+        this.scanner = new Scanner(System.in);
+        this.dado = "";
+        this.dado2 = "";
     }
 
     //Métodos
     public void iniciarAplicacao(){
         while (opcao != 7){
             imprimirMenuPrincipal();
-            opcao = scanner.nextInt();
+            opcao = Integer.parseInt(scanner.nextLine());
 
             switch (opcao) {
                 case 1:
@@ -34,7 +36,7 @@ public class Skynet {
                     break;
                 case 3:
                     System.out.println("Informe o nome da cidade que deseja buscar:");
-                    dado = scanner.next();
+                    dado = scanner.nextLine();
                     skynet.imprimirDadosCidade(dado);
                     break;
                 case 4:
@@ -44,7 +46,11 @@ public class Skynet {
                     
                     break;
                 case 6:
-                    
+                    System.out.println("Informe a cidade de partida: ");
+                    dado = scanner.nextLine();
+                    System.out.println("Informe a cidade de chegada: ");
+                    dado2 = scanner.nextLine();
+                    skynet.buscaEmLargura(dado, dado2);
                     break;
                 case 7:
                     System.out.println("Encerrando aplicação...");

@@ -6,15 +6,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import skynet.algoritmos.BuscaLargura;
+
 //Grafo em si
 public class SkynetGrafo {
     private ArrayList<Cidade> cidades;
     private ArrayList<LinkedList<Viagem>> linhasAereas;
 
+    private BuscaLargura buscaLargura;
+
     public SkynetGrafo (String arquivo){
         this.cidades = new ArrayList<>();
         this.linhasAereas = new ArrayList<>();
         lerArquivo(arquivo);
+
+        this.buscaLargura = new BuscaLargura(cidades, linhasAereas);
     }
 
     //Metodos
@@ -123,5 +129,17 @@ public class SkynetGrafo {
             System.out.printf("Preço da passagem: R$ %.2f\n", v.getPrecoPassagem());
             System.out.println("============X============");
         }
+    }
+
+    //Realiza a chamada do método de busca em largura
+    public void buscaEmLargura(String elemInicial, String elemFinal){
+        int indexInicial = retornarIndiceVertice(elemInicial);
+        int indexFinal = retornarIndiceVertice(elemFinal);
+        
+        this.buscaLargura.buscaEmLargura(indexInicial);
+
+        System.out.printf("Caminho com menos conexões entre %s e %s:\n", elemInicial, elemFinal);
+        this.buscaLargura.imprimirCaminho(indexInicial, indexFinal);
+        System.out.print("\b\b\b   \n\n");
     }
 }
