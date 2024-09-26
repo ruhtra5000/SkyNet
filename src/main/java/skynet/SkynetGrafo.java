@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import skynet.algoritmos.BuscaLargura;
+import skynet.algoritmos.CaminhoCurto;
 
 //Grafo em si
 public class SkynetGrafo {
@@ -14,6 +15,7 @@ public class SkynetGrafo {
     private ArrayList<LinkedList<Viagem>> linhasAereas;
 
     private BuscaLargura buscaLargura;
+    private CaminhoCurto caminhoCurto;
 
     public SkynetGrafo (String arquivo){
         this.cidades = new ArrayList<>();
@@ -21,6 +23,7 @@ public class SkynetGrafo {
         lerArquivo(arquivo);
 
         this.buscaLargura = new BuscaLargura(cidades, linhasAereas);
+        this.caminhoCurto = new CaminhoCurto(cidades, linhasAereas);
     }
 
     //Metodos
@@ -141,5 +144,17 @@ public class SkynetGrafo {
         System.out.printf("Caminho com menos conexões entre %s e %s:\n", elemInicial, elemFinal);
         this.buscaLargura.imprimirCaminho(indexInicial, indexFinal);
         System.out.print("\b\b\b   \n\n");
+    }
+
+    //Realiza a chamada do método que calcula o caminho mais barato
+    public void caminhoCurtoPreco(String elemInicial, String elemFinal){
+        this.caminhoCurto.caminhoCurtoPreco(elemInicial);
+        this.caminhoCurto.imprimirCaminhoMaisCurtoPreco(elemInicial, elemFinal);
+    }
+
+    //Realiza a chamada do método que calcula o caminho mais rápido
+    public void caminhoCurtoTempo(String elemInicial, String elemFinal){
+        this.caminhoCurto.caminhoCurtoTempo(elemInicial);
+        this.caminhoCurto.imprimirCaminhoMaisCurtoTempo(elemInicial, elemFinal);
     }
 }

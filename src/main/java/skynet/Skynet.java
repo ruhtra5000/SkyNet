@@ -40,10 +40,18 @@ public class Skynet {
                     skynet.imprimirDadosCidade(dado);
                     break;
                 case 4:
-                    
+                    System.out.println("Informe a cidade de partida: ");
+                    dado = scanner.nextLine();
+                    System.out.println("Informe a cidade de chegada: ");
+                    dado2 = scanner.nextLine();
+                    skynet.caminhoCurtoPreco(dado, dado2);
                     break;
                 case 5:
-                    
+                    System.out.println("Informe a cidade de partida: ");
+                    dado = scanner.nextLine();
+                    System.out.println("Informe a cidade de chegada: ");
+                    dado2 = scanner.nextLine();
+                    skynet.caminhoCurtoTempo(dado, dado2);
                     break;
                 case 6:
                     System.out.println("Informe a cidade de partida: ");
