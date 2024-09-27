@@ -35,6 +35,15 @@ public class SkynetGrafo {
         this.caminhoCurto = new CaminhoCurto(cidades, linhasAereas);
     }
 
+    //Getters (utilizados unicamente para os testes unitários)
+    public BuscaLargura getBuscaLargura() {
+        return this.buscaLargura;
+    }
+
+    public CaminhoCurto getCaminhoCurto() {
+        return this.caminhoCurto;
+    }
+
     //Metodos
     //Gerar o grafo
     public void lerArquivo (String arquivo) throws CidadeNaoEncontradaException {

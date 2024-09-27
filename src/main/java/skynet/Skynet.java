@@ -15,8 +15,8 @@ public class Skynet {
     //Construtor
     public Skynet (){
         this.skynet = new SkynetGrafo("skynet/src/main/resources/grafo.txt");
-        this.opcao = 0;
         this.scanner = new Scanner(System.in);
+        this.opcao = 0;
         this.dado = "";
         this.dado2 = "";
     }

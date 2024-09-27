@@ -26,6 +26,15 @@ public class CaminhoCurto {
         this.distancia = new double[cidades.size()];
     }
 
+    //Getters (utilizados unicamente para os testes unitários)
+    public int[] getPredecessores() {
+        return this.predecessores;
+    }
+
+    public double[] getDistancia() {
+        return this.distancia;
+    }
+
     //Caminho mais curto em questão de tempo
     public int [] caminhoCurtoTempo(String elementoInicial) throws CidadeNaoEncontradaException {
         int elemIndex = retornarIndiceVertice(elementoInicial);

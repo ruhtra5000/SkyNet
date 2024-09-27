@@ -30,6 +30,15 @@ public class BuscaLargura {
         this.fila = new LinkedList<>();
     }
 
+    //Getters (utilizados unicamente para os testes unitários)
+    public int[] getPredecessor() {
+        return this.predecessor;
+    }
+    
+    public int[] getDistancia() {
+        return this.distancia;
+    }
+
     //Algoritmo de busca em largura
     public void buscaEmLargura(int indexInicial) {
         //Todos os elementos iniciam pintados de branco
