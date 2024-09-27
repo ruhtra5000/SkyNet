@@ -8,19 +8,28 @@ import java.util.Scanner;
 
 import skynet.algoritmos.BuscaLargura;
 import skynet.algoritmos.CaminhoCurto;
+import skynet.excecoes.CidadeNaoEncontradaException;
 
 //Grafo em si
 public class SkynetGrafo {
+    //Atributos
     private ArrayList<Cidade> cidades;
     private ArrayList<LinkedList<Viagem>> linhasAereas;
 
     private BuscaLargura buscaLargura;
     private CaminhoCurto caminhoCurto;
 
-    public SkynetGrafo (String arquivo){
+    //Construtor
+    public SkynetGrafo (String arquivo) {
         this.cidades = new ArrayList<>();
         this.linhasAereas = new ArrayList<>();
-        lerArquivo(arquivo);
+        
+        try {
+            lerArquivo(arquivo);
+        }
+        catch(Exception err) {
+            System.out.println("Erro: " + err.getMessage());
+        }
 
         this.buscaLargura = new BuscaLargura(cidades, linhasAereas);
         this.caminhoCurto = new CaminhoCurto(cidades, linhasAereas);
@@ -28,7 +37,7 @@ public class SkynetGrafo {
 
     //Metodos
     //Gerar o grafo
-    public void lerArquivo (String arquivo) {
+    public void lerArquivo (String arquivo) throws CidadeNaoEncontradaException {
         int [] indices = {0, 0};//V, E
         String linha;
         try {
@@ -70,7 +79,7 @@ public class SkynetGrafo {
         linhasAereas.add(new LinkedList<>());
     }
 
-    private void adicionarAresta(String linha) {
+    private void adicionarAresta(String linha) throws CidadeNaoEncontradaException {
         String [] div = linha.split(";");
         int posicao1 = retornarIndiceVertice(div[0]);
         int posicao2 = retornarIndiceVertice(div[1]);
@@ -84,12 +93,12 @@ public class SkynetGrafo {
         linhasAereas.get(posicao2).add(v1);
     }
 
-    private int retornarIndiceVertice(String nome){
+    private int retornarIndiceVertice(String nome) throws CidadeNaoEncontradaException {
         for (int i = 0; i < cidades.size(); i++){
-            if(cidades.get(i).getNome().equals(nome))//melhorar
+            if(cidades.get(i).getNome().toLowerCase().equals(nome.trim().toLowerCase()))
                 return i;
         }
-        return -1;
+        throw new CidadeNaoEncontradaException();
     }
 
     //Imprimir o grafo
@@ -110,7 +119,7 @@ public class SkynetGrafo {
     }
 
     private String retornarNomeDoVertice (int index){
-        return cidades.get(index).getNome();
+        return cidades.get(index).getNome();//arrumar
     }
 
     public void imprimirVertices(){
@@ -119,41 +128,38 @@ public class SkynetGrafo {
         }
     }
 
-    public void imprimirDadosCidade(String nome){
-        int indexCidade = retornarIndiceVertice(nome);//pode lançar exceção
-        System.out.printf("Cidade: %s, %s\n",cidades.get(indexCidade).getNome(),
-                                             cidades.get(indexCidade).getPais());
+    public void imprimirDadosCidade(String nome) throws CidadeNaoEncontradaException {
+        int indexCidade = retornarIndiceVertice(nome);
+        System.out.printf("\nCidade: %s, %s\n", cidades.get(indexCidade).getNome(),
+                                                     cidades.get(indexCidade).getPais());
         System.out.println("Descrição: " + cidades.get(indexCidade).getDescricao());
 
         System.out.println("\nVoos disponíveis:");
         for(Viagem v : linhasAereas.get(indexCidade)){
-            System.out.printf("%s -> %s\n", nome, cidades.get(v.getVertice()).getNome());
+            System.out.printf("%s -> %s\n", cidades.get(indexCidade).getNome(), 
+                                                   cidades.get(v.getVertice()).getNome());
             System.out.printf("Tempo de viagem: %.1f h\n", v.getTempoViagem());
             System.out.printf("Preço da passagem: R$ %.2f\n", v.getPrecoPassagem());
             System.out.println("============X============");
         }
     }
 
-    //Realiza a chamada do método de busca em largura
-    public void buscaEmLargura(String elemInicial, String elemFinal){
+    //Delegação do método de busca em largura
+    public void buscaEmLargura(String elemInicial, String elemFinal) throws CidadeNaoEncontradaException {
         int indexInicial = retornarIndiceVertice(elemInicial);
-        int indexFinal = retornarIndiceVertice(elemFinal);
         
         this.buscaLargura.buscaEmLargura(indexInicial);
-
-        System.out.printf("Caminho com menos conexões entre %s e %s:\n", elemInicial, elemFinal);
-        this.buscaLargura.imprimirCaminho(indexInicial, indexFinal);
-        System.out.print("\b\b\b   \n\n");
+        this.buscaLargura.imprimirCaminho(elemInicial, elemFinal);
     }
 
-    //Realiza a chamada do método que calcula o caminho mais barato
-    public void caminhoCurtoPreco(String elemInicial, String elemFinal){
+    //Delegação do método que calcula o caminho mais barato
+    public void caminhoCurtoPreco(String elemInicial, String elemFinal) throws CidadeNaoEncontradaException{
         this.caminhoCurto.caminhoCurtoPreco(elemInicial);
         this.caminhoCurto.imprimirCaminhoMaisCurtoPreco(elemInicial, elemFinal);
     }
 
-    //Realiza a chamada do método que calcula o caminho mais rápido
-    public void caminhoCurtoTempo(String elemInicial, String elemFinal){
+    //Delegação do método que calcula o caminho mais rápido
+    public void caminhoCurtoTempo(String elemInicial, String elemFinal) throws CidadeNaoEncontradaException{
         this.caminhoCurto.caminhoCurtoTempo(elemInicial);
         this.caminhoCurto.imprimirCaminhoMaisCurtoTempo(elemInicial, elemFinal);
     }

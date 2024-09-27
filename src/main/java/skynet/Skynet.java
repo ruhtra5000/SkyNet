@@ -24,47 +24,52 @@ public class Skynet {
     //Métodos
     public void iniciarAplicacao(){
         while (opcao != 7){
-            imprimirMenuPrincipal();
-            opcao = Integer.parseInt(scanner.nextLine());
-
-            switch (opcao) {
-                case 1:
-                    skynet.imprimirAdj();
-                    break;
-                case 2:
-                    skynet.imprimirVertices();
-                    break;
-                case 3:
-                    System.out.println("Informe o nome da cidade que deseja buscar:");
-                    dado = scanner.nextLine();
-                    skynet.imprimirDadosCidade(dado);
-                    break;
-                case 4:
-                    System.out.println("Informe a cidade de partida: ");
-                    dado = scanner.nextLine();
-                    System.out.println("Informe a cidade de chegada: ");
-                    dado2 = scanner.nextLine();
-                    skynet.caminhoCurtoPreco(dado, dado2);
-                    break;
-                case 5:
-                    System.out.println("Informe a cidade de partida: ");
-                    dado = scanner.nextLine();
-                    System.out.println("Informe a cidade de chegada: ");
-                    dado2 = scanner.nextLine();
-                    skynet.caminhoCurtoTempo(dado, dado2);
-                    break;
-                case 6:
-                    System.out.println("Informe a cidade de partida: ");
-                    dado = scanner.nextLine();
-                    System.out.println("Informe a cidade de chegada: ");
-                    dado2 = scanner.nextLine();
-                    skynet.buscaEmLargura(dado, dado2);
-                    break;
-                case 7:
-                    System.out.println("Encerrando aplicação...");
-                    break;
-                default:
-                    break;
+            try {
+                imprimirMenuPrincipal();
+                opcao = Integer.parseInt(scanner.nextLine());
+    
+                switch (opcao) {
+                    case 1:
+                        skynet.imprimirAdj();
+                        break;
+                    case 2:
+                        skynet.imprimirVertices();
+                        break;
+                    case 3:
+                        System.out.println("Informe o nome da cidade que deseja buscar:");
+                        dado = scanner.nextLine();
+                        skynet.imprimirDadosCidade(dado);
+                        break;
+                    case 4:
+                        System.out.println("Informe a cidade de partida: ");
+                        dado = scanner.nextLine();
+                        System.out.println("Informe a cidade de chegada: ");
+                        dado2 = scanner.nextLine();
+                        skynet.caminhoCurtoPreco(dado, dado2);
+                        break;
+                    case 5:
+                        System.out.println("Informe a cidade de partida: ");
+                        dado = scanner.nextLine();
+                        System.out.println("Informe a cidade de chegada: ");
+                        dado2 = scanner.nextLine();
+                        skynet.caminhoCurtoTempo(dado, dado2);
+                        break;
+                    case 6:
+                        System.out.println("Informe a cidade de partida: ");
+                        dado = scanner.nextLine();
+                        System.out.println("Informe a cidade de chegada: ");
+                        dado2 = scanner.nextLine();
+                        skynet.buscaEmLargura(dado, dado2);
+                        break;
+                    case 7:
+                        System.out.println("Encerrando aplicação...");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch(Exception err) {
+                System.out.println("Erro: " + err.getMessage());
             }
         }
     }

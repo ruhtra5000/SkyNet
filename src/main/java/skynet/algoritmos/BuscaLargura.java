@@ -6,6 +6,7 @@ import java.util.Queue;
 
 import skynet.Cidade;
 import skynet.Viagem;
+import skynet.excecoes.CidadeNaoEncontradaException;
 
 public class BuscaLargura {
     //Atributos
@@ -43,10 +44,11 @@ public class BuscaLargura {
         fila.add(indexInicial);
         cor[indexInicial] = 'C';
         distancia[indexInicial] = 0;
-
+        
+         //Busca em largura em si
         while(!fila.isEmpty()){
             int indexElemAtual = fila.remove();
-            //Passando pelos elementos da lista de adj. atual
+            //Percorrendo a lista de adj. atual
             for(Viagem v : linhasAereas.get(indexElemAtual)){
                 int i = v.getVertice();
                 if(cor[i] == 'B'){
@@ -60,7 +62,16 @@ public class BuscaLargura {
         }
     }
 
-    public void imprimirCaminho(int ini, int fim){
+    public void imprimirCaminho(String elemInicial, String elemFinal) throws CidadeNaoEncontradaException {
+        int ini = retornarIndiceVertice(elemInicial);
+        int fim = retornarIndiceVertice(elemFinal);
+
+        System.out.printf("Caminho com menos conexões entre %s e %s:\n", elemInicial, elemFinal);
+        buscarCaminho(ini, fim);
+        System.out.print("\b\b\b   \n\n");
+    }
+
+    private void buscarCaminho(int ini, int fim) {
         if(fim == ini) {
             System.out.print(cidades.get(ini).getNome() + " -> ");
         }
@@ -69,9 +80,18 @@ public class BuscaLargura {
                               cidades.get(ini).getNome(), cidades.get(fim).getNome());
         } 
         else {
-            imprimirCaminho(ini, predecessor[fim]);
+            buscarCaminho(ini, predecessor[fim]);
             System.out.print(cidades.get(fim).getNome() + " -> ");
         }
+    }
+
+    //Função auxiliar
+    private int retornarIndiceVertice(String nome) throws CidadeNaoEncontradaException {
+        for (int i = 0; i < cidades.size(); i++){
+            if(cidades.get(i).getNome().toLowerCase().equals(nome.trim().toLowerCase()))
+                return i;
+        }
+        throw new CidadeNaoEncontradaException();
     }
 
 }

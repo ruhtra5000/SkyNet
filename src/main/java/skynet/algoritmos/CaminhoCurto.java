@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import skynet.Cidade;
 import skynet.Viagem;
+import skynet.excecoes.CidadeNaoEncontradaException;
 
 //Algoritmo de Bellman-Ford, conseguindo calcular o caminho mais curto
 //em relação ao tempo e ao preço das passagens.
@@ -26,7 +27,7 @@ public class CaminhoCurto {
     }
 
     //Caminho mais curto em questão de tempo
-    public int [] caminhoCurtoTempo(String elementoInicial){
+    public int [] caminhoCurtoTempo(String elementoInicial) throws CidadeNaoEncontradaException {
         int elemIndex = retornarIndiceVertice(elementoInicial);
 
         iniciarElementos(elemIndex);
@@ -46,8 +47,6 @@ public class CaminhoCurto {
             for(int j = 0; j < linhasAereas.get(i).size(); j++){
                 jIndexReal = linhasAereas.get(i).get(j).getVertice();
                 if(distancia[jIndexReal] > (distancia[i] + linhasAereas.get(i).get(j).getTempoViagem())){
-                    System.out.println("dist[j]: " + distancia[j]);
-                    System.out.println("dist[i] + lA[i][j]: " + distancia[i] + " + " + linhasAereas.get(i).get(j).getTempoViagem());
                     return null;
                 }
             }
@@ -71,16 +70,16 @@ public class CaminhoCurto {
         }
     }
 
-    public void imprimirCaminhoMaisCurtoTempo(String ini, String fim){
+    public void imprimirCaminhoMaisCurtoTempo(String ini, String fim) throws CidadeNaoEncontradaException {
         if(predecessores == null){   
-            System.out.println("Há um ciclo de peso positivo no grafo");
+            System.out.println("\nHá um ciclo de peso positivo no grafo\n");
             return;
         }
         
         int iniIndex = retornarIndiceVertice(ini);
         int fimIndex = retornarIndiceVertice(fim);
 
-        System.out.printf("Caminho mais rapido entre %s e %s\n", ini, fim);
+        System.out.printf("\nCaminho mais rapido entre %s e %s\n", ini, fim);
         buscarCaminhoMaisCurtoTempo(iniIndex, fimIndex);
         System.out.print("\b\b\b   \n\n");
     }
@@ -98,7 +97,7 @@ public class CaminhoCurto {
     }
 
     //Caminho mais curto em questão de preço 
-    public int [] caminhoCurtoPreco(String elementoInicial){
+    public int [] caminhoCurtoPreco(String elementoInicial) throws CidadeNaoEncontradaException {
         int elemIndex = retornarIndiceVertice(elementoInicial);
 
         iniciarElementos(elemIndex);
@@ -118,8 +117,6 @@ public class CaminhoCurto {
             for(int j = 0; j < linhasAereas.get(i).size(); j++){
                 jIndexReal = linhasAereas.get(i).get(j).getVertice();
                 if(distancia[jIndexReal] > (distancia[i] + linhasAereas.get(i).get(j).getPrecoPassagem())){
-                    System.out.println("dist[j]: " + distancia[j]);
-                    System.out.println("dist[i] + lA[i][j]: " + distancia[i] + " + " + linhasAereas.get(i).get(j).getPrecoPassagem());
                     return null;
                 }
             }
@@ -135,16 +132,16 @@ public class CaminhoCurto {
         }
     }
 
-    public void imprimirCaminhoMaisCurtoPreco(String ini, String fim){
+    public void imprimirCaminhoMaisCurtoPreco(String ini, String fim) throws CidadeNaoEncontradaException {
         if(predecessores == null){   
-            System.out.println("Há um ciclo de peso positivo no grafo");
+            System.out.println("\nHá um ciclo de peso positivo no grafo\n");
             return;
         }
         
         int iniIndex = retornarIndiceVertice(ini);
         int fimIndex = retornarIndiceVertice(fim);
 
-        System.out.printf("Caminho mais barato entre %s e %s\n", ini, fim);
+        System.out.printf("\nCaminho mais barato entre %s e %s\n", ini, fim);
         buscarCaminhoMaisCurtoPreco(iniIndex, fimIndex);
         System.out.print("\b\b\b   \n\n");
     }
@@ -162,11 +159,11 @@ public class CaminhoCurto {
     }
 
     //Função auxiliar
-    private int retornarIndiceVertice(String nome){
+    private int retornarIndiceVertice(String nome) throws CidadeNaoEncontradaException {
         for (int i = 0; i < cidades.size(); i++){
-            if(cidades.get(i).getNome().equals(nome))//melhorar
+            if(cidades.get(i).getNome().toLowerCase().equals(nome.trim().toLowerCase()))
                 return i;
         }
-        return -1;
+        throw new CidadeNaoEncontradaException();
     }
 }
